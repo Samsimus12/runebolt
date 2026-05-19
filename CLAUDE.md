@@ -222,7 +222,7 @@ Progressive overlays drawn inside the rotated canvas block — rotate with the s
 
 ## App Store
 
-- **iOS**: v1.0 rejected 2026-05-08 (Guideline 2.1 — ATT prompt not appearing). Fixed ATT order, submitted build `1.0.0 (2)` on 2026-05-09. **Awaiting re-review as of 2026-05-09.**
+- **iOS**: v1.0 rejected 2026-05-08 (Guideline 2.1 — ATT prompt not appearing). Fixed ATT order, submitted build `1.0.0 (2)` on 2026-05-09. **Approved and live as of 2026-05-12.**
 - To submit a new build: bump `version` in `pubspec.yaml` (e.g. `1.0.0+3`), run `flutter build ipa --release`, upload via Transporter, then select the new build in App Store Connect and resubmit.
 - **Privacy policy**: `docs/privacy.html` — enable GitHub Pages (main branch, /docs folder) so `https://samsimus12.github.io/novabolt/privacy.html` is live.
 - **Android**: not yet submitted.
@@ -238,7 +238,6 @@ Progressive overlays drawn inside the rotated canvas block — rotate with the s
 
 | Priority | Feature | Notes |
 |---|---|---|
-| High | **iOS re-review** | Build 2 submitted 2026-05-09; awaiting Apple decision |
-| Medium | **Sound SFX** | Per-weapon fire, hit, death, level-up sounds via `AudioManager` |
-| Low | **Android Play Store** | Submit once iOS review passes; `flutter build appbundle --release` |
+| Done | **iOS App Store** | Live as of 2026-05-12 |
+| High | **Android Play Store** | AAB 1.0.0+3 in internal testing as of 2026-05-12; promote to production once approved (~2026-05-18) |
 | Stashed | **Camera-follow / larger world** | `git stash list` → "camera-follow world expansion (WIP)"; needs more work before it feels right |

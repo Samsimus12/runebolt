@@ -10,6 +10,7 @@ import 'audio/audio_manager.dart';
 import 'coins/coin_manager.dart';
 import 'game/novabolt_game.dart';
 import 'stats/stats_manager.dart';
+import 'screens/countdown_overlay.dart';
 import 'screens/game_controls_overlay.dart';
 import 'screens/game_over_screen.dart';
 import 'screens/level_up_screen.dart';
@@ -92,6 +93,7 @@ class _NovaboltAppState extends State<NovaboltApp> {
         'GameOver': (context, game) =>
             GameOverScreen(game: game, onMenu: _returnToMenu),
         'LevelUp': (context, game) => LevelUpScreen(game: game),
+        'Countdown': (context, game) => CountdownOverlay(game: game),
       },
     );
   }

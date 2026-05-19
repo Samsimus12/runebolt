@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../ads/ad_manager.dart';
+import '../audio/audio_manager.dart';
 import '../coins/coin_manager.dart';
 import '../game/novabolt_game.dart';
 import '../stats/stats_manager.dart';
@@ -34,6 +35,13 @@ class _GameOverScreenState extends State<GameOverScreen> {
 
   int get _coinsEarned => widget.game.xpSystem.currentLevel * 10;
 
+  String get _playTime {
+    final total = widget.game.playTimeSeconds.toInt();
+    final m = total ~/ 60;
+    final s = total % 60;
+    return '$m:${s.toString().padLeft(2, '0')}';
+  }
+
   void _awardCoins() {
     if (_coinsAwarded) return;
     _coinsAwarded = true;
@@ -44,7 +52,10 @@ class _GameOverScreenState extends State<GameOverScreen> {
     setState(() => _isShowingAd = true);
     AdManager.instance.showRewardedAd(
       onRewarded: () => widget.game.continueWithHalfHp(),
-      onDismissed: () => setState(() => _isShowingAd = false),
+      onDismissed: () {
+        AudioManager.instance.playGame();
+        setState(() => _isShowingAd = false);
+      },
     );
   }
 
@@ -100,7 +111,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
             const SizedBox(height: 14),
             // Run stats
             Text(
-              'Level ${widget.game.xpSystem.currentLevel}  ·  ${widget.game.killCount} kills',
+              'Level ${widget.game.xpSystem.currentLevel}  ·  ${widget.game.killCount} kills  ·  $_playTime',
               style: const TextStyle(
                 color: Color(0xFFF5F5DC),
                 fontSize: 22,

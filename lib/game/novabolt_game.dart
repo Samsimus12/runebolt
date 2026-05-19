@@ -45,6 +45,9 @@ class NovaboltGame extends FlameGame with HasCollisionDetection {
   bool isBossReward = false;
   bool _levelUpPendingAfterContinue = false;
 
+  double _playTimeSeconds = 0;
+  double get playTimeSeconds => _playTimeSeconds;
+
   NovaMode activeNovaMode = NovaMode.laser;
   Set<NovaMode> unlockedNovaModes = {NovaMode.laser};
   NovaMode? pendingInheritMode;
@@ -104,6 +107,12 @@ class NovaboltGame extends FlameGame with HasCollisionDetection {
     camera.viewport.add(joystick);
     camera.viewport.add(aimJoystick);
     camera.viewport.add(Hud());
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (!isGameOver) _playTimeSeconds += dt;
   }
 
   void onMonsterKilled(int xpValue, int chargeValue) {
@@ -261,7 +270,8 @@ class NovaboltGame extends FlameGame with HasCollisionDetection {
       // Show the level-up that was interrupted by death; engine stays paused.
       overlays.add('LevelUp');
     } else {
-      resumeEngine();
+      // Engine stays paused; CountdownOverlay calls resumeEngine() when done.
+      overlays.add('Countdown');
     }
   }
 
@@ -287,12 +297,14 @@ class NovaboltGame extends FlameGame with HasCollisionDetection {
     isNewBest = false;
     killCount = 0;
     bossPhase = 0;
+    _playTimeSeconds = 0;
     currentCards = [];
     bonusCards = [];
     activeNovaMode = NovaMode.laser;
     unlockedNovaModes = {NovaMode.laser};
     pendingInheritMode = null;
     overlays.remove('GameOver');
+    overlays.remove('Countdown');
     world.children.whereType<Monster>().toList().forEach((m) => m.removeFromParent());
     world.children.whereType<Projectile>().toList().forEach((p) => p.removeFromParent());
     world.children.whereType<SuperchargeLaser>().toList().forEach((l) => l.removeFromParent());
